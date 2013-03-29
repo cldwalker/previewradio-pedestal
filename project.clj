@@ -5,6 +5,7 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.5.0"]
                  [comb "0.1.0"]
+                 [org.clojure/data.json "0.2.1"]
                  [io.pedestal/pedestal.service "0.1.2-SNAPSHOT"]
 
                  ;; Remove this line and uncomment the next line to

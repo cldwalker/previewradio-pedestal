@@ -6,6 +6,7 @@
               [io.pedestal.service.interceptor :as interceptor]
               [comb.template :as comb]
               [clojure.java.io :as io]
+              [previewradio-pedestal.itunes :as itunes]
               [ring.util.response :as ring-resp]))
 
 (interceptor/defon-response html-content-type
@@ -30,8 +31,7 @@
 
 (defn search-page
   [request]
-  (let [albums
-        [{:artist "Timbalada", :name "Pure Brazil: The Best of Timbalada", :id 22704866} {:artist "Timbalada", :name "Axé Bahia", :id 263721902} {:artist "Timbalada", :name "Mãe de Samba", :id 263715941} {:artist "Timbalada", :name "Alegria Original", :id 388180677} {:artist "Timbaland", :name "Shock Value", :id 250012892} {:artist "Various Artists", :name "Pure Brazil 2: Rio Bahia Carnival", :id 128666852} {:artist "Timbaland", :name "Break Ya Back (feat. Dev) - Single", :id 517307604} {:artist "Various Artists", :name "Pure Brazil 2: Dance of the Orixás", :id 134754575} {:artist "Justin Timberlake", :name "FutureSex/LoveSounds", :id 310757916} {:artist "Kiriaka", :name "Live At Musikens Hus 2009 - EP", :id 488870402}]]
+  (let [albums (itunes/album-search "Timbalada")]
     (response-with-layout "public/search.erb" {:albums albums})))
 
 (defn preview-page
