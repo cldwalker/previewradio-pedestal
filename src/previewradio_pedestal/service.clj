@@ -12,13 +12,16 @@
   [response]
   (ring-resp/content-type response "text/html"))
 5
+(defn- render [template & [template-bindings]]
+  (apply comb/eval (slurp (io/resource template)) template-bindings))
+
 (defn home-page
   [request]
   (ring-resp/response "Hello World!"))
 
 (defn erb-page
   [request]
-  (ring-resp/response (comb/eval (slurp (io/resource "public/index.erb")) {:name "erb"})))
+  (ring-resp/response (render "public/index.erb")))
 
 (defroutes routes
   [[["/" {:get home-page}

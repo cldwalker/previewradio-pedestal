@@ -1,0 +1,25 @@
+<div id="menu">
+  <h1><a href="/">Preview<strong>Radio</strong></a></h1>
+</div>
+
+<audio id="preview" preload="none">
+  <source src="" type="audio/mp4" />
+  <p>You need to update to a newer browser such as Chrome, Firefox or Safari to use PreviewRadio.</p>
+</audio>
+
+<div id="album-view">
+  <div id="album-info">
+    <img src="" id="artwork" />
+    <p id="artist"></p>
+    <p id="album-title"></p>
+    <a href="#" target="blank" id="view-in-itunes">View in iTunes</a>
+  </div>
+
+  <ul id="playlist">
+  </ul>
+</div>
+
+<script type="text/javascript" charset="utf-8">
+  $(function() { player = new PreviewRadio.AlbumPlayer(<%= @album.to_json %>) })
+</script>
+
