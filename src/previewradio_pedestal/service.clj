@@ -28,9 +28,20 @@
   [request]
   (response-with-layout "public/index.erb"))
 
+(defn search-page
+  [request]
+  (let [albums [{:name "Ziggy" :artist "Zigster" :id "1"}]]
+    (response-with-layout "public/search.erb" {:albums albums})))
+
+(defn preview-page
+  [request]
+  (response-with-layout "public/preview.erb" {:album-json "{}"}))
+
 (defroutes routes
   [[["/" {:get home-page}
      ^:interceptors [html-content-type]
+     ["/previews/search" {:post search-page}]
+     ["/previews/:id" {:get preview-page}]
      ["/test" {:get test-page}]]]])
 
 ;; You can use this fn or a per-request fn via io.pedestal.service.http.route/url-for
