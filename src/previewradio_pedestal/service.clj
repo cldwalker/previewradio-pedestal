@@ -35,13 +35,19 @@
 
 (defn preview-page
   [request]
-  (response-with-layout "public/preview.erb" {:album-json "{}"}))
+  (let [album-json "{\"wrapper_type\":\"collection\",\"collection_type\":\"Album\",\"artist_id\":101845783,\"amg_artist_id\":736692,\"collection_censored_name\":\"Fantastica Batucada\",\"artist_view_url\":\"https://itunes.apple.com/us/artist/escola-samba-nocidade-independante/id101845783?uo=4\",\"artwork_url60\":\"http://a5.mzstatic.com/us/r1000/000/Music/d2/9e/db/mzi.hzsqwxgc.60x60-50.jpg\",\"artwork_url100\":\"http://a3.mzstatic.com/us/r1000/000/Music/d2/9e/db/mzi.hzsqwxgc.100x100-75.jpg\",\"collection_price\":6.99,\"collection_explicitness\":\"notExplicit\",\"track_count\":10,\"copyright\":\"℗ 2005 IRIS MUSIC\",\"country\":\"USA\",\"currency\":\"USD\",\"release_date\":\"2005-06-09T07:00:00Z\",\"primary_genre_name\":\"World\",\"id\":101846315,\"name\":\"Fantastica Batucada\",\"artist\":\"Escola De Samba Nocidade Independante De Padre Miguel\",\"view_url\":\"https://itunes.apple.com/us/album/fantastica-batucada/id101846315?uo=4\"}"]
+    (response-with-layout "public/preview.erb" {:album-json album-json})))
+
+(defn preview-next-page
+  [request]
+  (ring-resp/response "[]"))
 
 (defroutes routes
   [[["/" {:get home-page}
      ^:interceptors [html-content-type]
      ["/previews/search" {:post search-page}]
      ["/previews/:id" {:get preview-page}]
+     ["/previews/:id/next" {:get preview-next-page}]
      ["/test" {:get test-page}]]]])
 
 ;; You can use this fn or a per-request fn via io.pedestal.service.http.route/url-for
