@@ -12,21 +12,26 @@
   [response]
   (ring-resp/content-type response "text/html"))
 5
-(defn- render [template & [template-bindings]]
-  (apply comb/eval (slurp (io/resource template)) template-bindings))
+(defn- render
+  ([template] (render template {}))
+  ([template template-bindings]
+     (comb/eval (slurp (io/resource template)) template-bindings)))
 
-(defn home-page
+(defn- response-with-layout [& args]
+  (ring-resp/response (render "public/layout.erb" {:yield (apply render args)})))
+
+(defn test-page
   [request]
   (ring-resp/response "Hello World!"))
 
-(defn erb-page
+(defn home-page
   [request]
-  (ring-resp/response (render "public/index.erb")))
+  (response-with-layout "public/index.erb"))
 
 (defroutes routes
   [[["/" {:get home-page}
      ^:interceptors [html-content-type]
-     ["/erb" {:get erb-page}]]]])
+     ["/test" {:get test-page}]]]])
 
 ;; You can use this fn or a per-request fn via io.pedestal.service.http.route/url-for
 (def url-for (route/url-for-routes routes))
