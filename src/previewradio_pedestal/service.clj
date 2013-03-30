@@ -31,7 +31,7 @@
 
 (defn search-page
   [request]
-  (let [albums (itunes/album-search "Timbalada")]
+  (let [albums (itunes/album-search (get (:params request) "query"))]
     (response-with-layout "public/search.erb" {:albums albums})))
 
 (defn preview-page
@@ -45,7 +45,7 @@
 
 (defroutes routes
   [[["/" {:get home-page}
-     ^:interceptors [html-content-type]
+     ^:interceptors [body-params/body-params html-content-type]
      ["/previews/search" {:post search-page}]
      ["/previews/:id" {:get preview-page}]
      ["/previews/:id/next" {:get preview-next-page}]
