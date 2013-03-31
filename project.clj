@@ -6,12 +6,12 @@
   :dependencies [[org.clojure/clojure "1.5.0"]
                  [comb "0.1.0"]
                  [org.clojure/data.json "0.2.1"]
-                 [io.pedestal/pedestal.service "0.1.2-SNAPSHOT"]
+                 [io.pedestal/pedestal.service "0.1.2"]
 
                  ;; Remove this line and uncomment the next line to
                  ;; use Tomcat instead of Jetty:
-                 [io.pedestal/pedestal.jetty "0.1.2-SNAPSHOT"]
-                 ;; [io.pedestal/pedestal.tomcat "0.1.2-SNAPSHOT"]
+                 [io.pedestal/pedestal.jetty "0.1.2"]
+                 ;; [io.pedestal/pedestal.tomcat "0.1.2"
 
                  ;; Logging
                  [ch.qos.logback/logback-classic "1.0.7"]
