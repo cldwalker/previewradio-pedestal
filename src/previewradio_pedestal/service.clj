@@ -15,31 +15,31 @@
   (ring-resp/content-type response "text/html"))
 5
 (defn- render
+  "Renders an erb file with optional bindings."
   ([template] (render template {}))
   ([template template-bindings]
      (comb/eval (slurp (io/resource template)) template-bindings)))
 
-(defn- response-with-layout [& args]
-  (ring-resp/response (render "public/layout.erb" {:yield (apply render args)})))
-
-(defn test-page
-  [request]
-  (ring-resp/response "Hello World!"))
+(defn- erb
+  "Given an erb file's basename, renders it wrapped in a default layout"
+  [& args]
+  (let [basename (format "public/%s.erb" (name (first args)))]
+    (ring-resp/response (render "public/layout.erb" {:yield (apply render (cons basename (rest args)))}))))
 
 (defn home-page
   [request]
-  (response-with-layout "public/index.erb"))
+  (erb :index))
 
 (defn search-page
   [request]
   (let [albums (itunes/album-search (get (:params request) "query"))]
-    (response-with-layout "public/search.erb" {:albums albums})))
+    (erb :search {:albums albums})))
 
 (defn preview-page
   [request]
   (let [album (itunes/related-album (-> request :path-params :id))
         album-json (json/write-str album)]
-    (response-with-layout "public/preview.erb" {:album-json album-json})))
+    (erb :preview {:album-json album-json})))
 
 (defn preview-next-page
   [request]
@@ -51,8 +51,7 @@
      ^:interceptors [body-params/body-params html-content-type]
      ["/previews/search" {:post search-page}]
      ["/previews/:id" {:get preview-page}]
-     ["/previews/:id/next" {:get preview-next-page}]
-     ["/test" {:get test-page}]]]])
+     ["/previews/:id/next" {:get preview-next-page}]]]])
 
 ;; You can use this fn or a per-request fn via io.pedestal.service.http.route/url-for
 (def url-for (route/url-for-routes routes))
