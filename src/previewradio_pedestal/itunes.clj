@@ -10,7 +10,7 @@
                (map (fn [[k v]] (format "%s=%s" (name k) v)))
                (clojure.string/join "&"))))
 
-(defn json-slurp [url]
+(defn- url->json-results [url]
   (-> url
       slurp
       (json/read-str :key-fn keyword)
@@ -33,17 +33,20 @@
    :view_url (:trackViewUrl m)})
 
 (defn find-album
+  "Given an album id, returns an album map."
   ([id] (find-album id {}))
   ([id params]
-     (let [results (json-slurp (lookup-url id params))
+     (let [results (url->json-results (lookup-url id params))
            album (->album (first results))
            songs (map ->song (rest results))]
        (assoc album :songs songs))))
 
-(defn album-search [term]
+(defn album-search
+  "Given a search term, returns search results as a list of album maps."
+  [term]
   (->> (format "https://itunes.apple.com/search?term=%s&media=music&entity=album&limit=10"
                (clojure.string/replace term " " "+"))
-       json-slurp
+       url->json-results
        (map ->album)))
 
 (defn- related-album-urls [album]
@@ -60,7 +63,10 @@
       (throw (ex-info "No related albums found for album" {:album album})))
     related-albums))
 
-(defn related-album [id]
+(defn related-album
+  "Given an album id, returns a random related album using the 'Listeners Also Bought'
+section of an album's page."
+  [id]
   (let [url (-> id
                 find-album
                 related-album-urls
