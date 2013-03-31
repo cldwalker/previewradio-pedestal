@@ -38,7 +38,6 @@
 (defn preview-page
   [request]
   (let [album (itunes/related-album (-> request :path-params :id))
-        blah (prn "ALBUM:" album)
         album-json (json/write-str album)]
     (response-with-layout "public/preview.erb" {:album-json album-json})))
 

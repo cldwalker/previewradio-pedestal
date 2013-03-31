@@ -36,7 +36,6 @@
   ([id] (find-album id {}))
   ([id params]
      (let [results (json-slurp (lookup-url id params))
-           #_(prn results)
            album (->album (first results))
            songs (map ->song (rest results))]
        (assoc album :songs songs))))
