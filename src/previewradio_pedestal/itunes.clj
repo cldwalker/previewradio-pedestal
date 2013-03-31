@@ -28,6 +28,8 @@
    :name (:trackName m)
    :album (:collectionName m)
    :artist (:artistName m)
+   :track_number (:trackNumber m)
+   :preview_url (:previewUrl m)
    :view_url (:trackViewUrl m)})
 
 (defn find-album
@@ -61,7 +63,7 @@
 
 (defn related-album [id]
   (let [url (-> id
-                (find-album {:entity "song"})
+                find-album
                 related-album-urls
                 shuffle
                 first)
