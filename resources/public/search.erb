@@ -3,11 +3,11 @@
   <p class="tagline">Discover albums like:</p>
 
   <ul id="results">
-    <% (doseq [album albums] %>
+    <% @albums.each do |album| %>
       <li>
-        <a href="/previews/<%= (:id album) %>"><%= (:name album) %></a>
-        <span><%= (:artist album) %></span>
+        <a href="/previews/<%= album.id %>"><%= album.name %></a>
+        <span><%= album.artist %></span>
       </li>
-    <% ) %>
+    <% end %>
   </ul>
 </div>
