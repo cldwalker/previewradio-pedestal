@@ -17,12 +17,12 @@ previewradio is a music discovery service that works like this:
 
 1. Search for an album you know.
 2. Click on it.
-3. Sit back and enjoy preview clips of albums related to that album via iTunes.
+3. Sit back and enjoy preview clips of related via iTunes. When an
+album finishes, it should automatically transition to the next one.
 
 ## Comparison to Sinatra
 
-A [diff is a thousand words](#TODO) or less. The original app had 150
- lines, 4 endpoints, 3 views and 4 javascript files. The pedestal service ended up:
+A [diff is a thousand words](https://github.com/cldwalker/previewradio-pedestal/commit/229f1904b69bf428668532663c9b23aa13ade119) or less. The original app had 150 lines, 4 endpoints, 3 views and 4 javascript files. The pedestal service ended up:
 
 * functionally equivalent to the sinatra one
 * with about the same line count
