@@ -13,7 +13,7 @@
 (interceptor/defon-response html-content-type
   [response]
   (ring-resp/content-type response "text/html"))
-5
+
 (defn- render
   "Renders an erb file with optional bindings."
   ([template] (render template {}))

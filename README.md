@@ -17,7 +17,7 @@ previewradio is a music discovery service that works like this:
 
 1. Search for an album you know.
 2. Click on it.
-3. Sit back and enjoy preview clips of related via iTunes. When an
+3. Sit back and enjoy preview clips of related albums via iTunes. When an
 album finishes, it should automatically transition to the next one.
 
 ## Comparison to Sinatra
